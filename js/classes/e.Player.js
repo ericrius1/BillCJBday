@@ -36,7 +36,7 @@ e.Player = new Class({
     var rollTween = new TWEEN.Tween(curPos).
     to(finalPos, this.turnTime).
     easing(TWEEN.Easing.Cubic.InOut).
-    delay(THREE.Math.randInt(1000, 3000)).
+    delay(THREE.Math.randInt(1000, 2500)).
     onUpdate(function() {
       appa.position.x = curPos.x;
       appa.rotation.set(curPos.rotX, curPos.rotY, curPos.rotZ);
@@ -72,7 +72,7 @@ e.Player = new Class({
     }
     var somersaultTween = new TWEEN.Tween(curPos).
     to(finalSomersaultPosition, this.turnTime).
-    delay(THREE.Math.randInt(1000, 3000)).
+    delay(THREE.Math.randInt(1000, 2500)).
     easing(TWEEN.Easing.Cubic.InOut).
     yoyo(true).
     repeat(1).
