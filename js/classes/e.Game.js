@@ -109,8 +109,8 @@ e.Game = new Class({
       rotY: 0
     }
     var camTween = new TWEEN.Tween(curPos).
-      to(finalPos, 30000).
-      easing(TWEEN.Easing.Quartic.In).
+      to(finalPos, 35000).
+      easing(TWEEN.Easing.Quartic.InOut).
       onUpdate(function(){
         self.camera.position.set(curPos.x, curPos.y,  curPos.z);
         self.camera.rotation.y = curPos.rotY;

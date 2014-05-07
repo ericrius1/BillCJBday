@@ -4,16 +4,17 @@ e.Player = new Class({
     this.camera = options.camera;
     this.game = options.game;
     this.game.scene.add(appa);
+    this.delay = 2000;
     this.turnTime = 1300;
-    appa.rotation.x = -Math.PI / 2;
+    appa.rotation.x = -Math.PI  * (0.40);
     appa.position.y = 300
     appa.scale.multiplyScalar(300);
-
     this.roll();
 
 
 
   },
+
 
   roll: function() {
     var self = this;
