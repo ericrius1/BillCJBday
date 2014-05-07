@@ -5,8 +5,8 @@ e.World = new Class({
 
 
     var parameters = {
-      width: 2000,
-      height: 2000,
+      width: 1000,
+      height: 1000,
       widthSegments: 250,
       heightSegments: 250,
       depth: 1500,
@@ -43,6 +43,9 @@ e.World = new Class({
     mirrorMesh.add(this.water);
     mirrorMesh.rotation.x = -Math.PI * 0.5;
     this.game.scene.add(mirrorMesh);
+    _.each(_.sample(mirrorMesh.geometry.vertices, 1000), function(vertex){
+      vertex.z = 200;
+    });
 
   },
 

@@ -11,7 +11,7 @@ e.Game = new Class({
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100000);
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000000);
     this.camera.position.set(0, 130, 400);
 
 
