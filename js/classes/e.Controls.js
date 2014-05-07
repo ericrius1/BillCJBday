@@ -4,6 +4,7 @@ e.Controls = new Class({
     this.player = options.player;
     this.keyboard = new e.Keyboard();
     this.controls = new THREE.OrbitControls(this.camera);
+    this.controls.autoRotate = true;
 
   },
   update: function(){

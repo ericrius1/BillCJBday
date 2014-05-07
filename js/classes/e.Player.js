@@ -3,14 +3,14 @@ e.Player = new Class({
   construct: function(options) {
     this.camera = options.camera;
     this.game =  options.game;
-    var self = this;
+    this.game.scene.add(appa);
+    appa.rotation.x = -Math.PI/2;
+    appa.position.y = this.camera.position.y/2
+    this.camera.lookAt(appa.position);
+    appa.scale.multiplyScalar(50);
+  },
 
-
-    var loader = new THREE.OBJMTLLoader();
-    loader.load('assets/appa.obj', 'assets/appa.mtl', function(object) {
-      self.game.scene.add(object);
-    });
-
+  update: function(){
 
   }
 

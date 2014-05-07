@@ -11,8 +11,8 @@ e.Game = new Class({
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(45, 1, 1, 100000);
-    this.camera.position.set(0, 100, 500);
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100000);
+    this.camera.position.set(0, 200, 400);
 
 
     var ambientLight = new THREE.AmbientLight(0x555555);
@@ -60,6 +60,7 @@ e.Game = new Class({
   render: function() {
     this.controls.update();
     this.world.update();
+    this.player.update();
     TWEEN.update();
     this.renderer.render(this.scene, this.camera);
     requestAnimationFrame(this.render);

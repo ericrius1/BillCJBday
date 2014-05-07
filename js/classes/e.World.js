@@ -2,26 +2,53 @@ e.World = new Class({
 
   construct: function(options) {
     this.game = options.game;
-    var maxAnisotropy = this.game.renderer.getMaxAnisotropy();
-    var texture = THREE.ImageUtils.loadTexture("assets/grass.jpg");
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(512, 512);
-    texture.anistropy = maxAnisotropy;
 
-    var groundBasic = new THREE.MeshPhongMaterial({
-      color: 0xffffff,
-      map: texture
+
+    var parameters = {
+      width: 2000,
+      height: 2000,
+      widthSegments: 250,
+      heightSegments: 250,
+      depth: 1500,
+      param: 4,
+      filterparam: 1
+    }
+
+
+    var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
+    directionalLight.position.set(-1, 0.4, -1);
+    this.game.scene.add(directionalLight);
+
+    var waterNormals = new THREE.ImageUtils.loadTexture('assets/waternormals.jpg');
+    waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
+
+    this.water = new THREE.Water(this.game.renderer, this.game.camera, this.game.scene, {
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: waterNormals,
+      alpha: 1.0,
+      sunColor: 0xffffff,
+      sunDirection: directionalLight.position.normalize(),
+      waterColor: 0x001e0f,
+      distortionScale: 50.0,
     });
-    var ground = new THREE.Mesh(new THREE.PlaneGeometry(50000, 50000), groundBasic);
-    ground.rotation.x = -Math.PI / 2;
-    this.game.scene.add(ground);
 
-    ground.castShadow = false;
-    ground.receiveShadow = true;
+
+    var mirrorMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(parameters.width * 500, parameters.height * 500, 50, 50),
+      this.water.material
+    );
+
+
+    mirrorMesh.add(this.water);
+    mirrorMesh.rotation.x = -Math.PI * 0.5;
+    this.game.scene.add(mirrorMesh);
 
   },
 
   update: function() {
+    this.water.material.uniforms.time.value += 1.0 / 60.0;
+    this.water.render();
   }
 
 });
