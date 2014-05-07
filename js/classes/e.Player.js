@@ -4,10 +4,10 @@ e.Player = new Class({
     this.camera = options.camera;
     this.game = options.game;
     this.game.scene.add(appa);
+    this.turnTime = 1300;
     appa.rotation.x = -Math.PI / 2;
     appa.position.y = 300
-    this.camera.lookAt(appa.position);
-    appa.scale.multiplyScalar(100);
+    appa.scale.multiplyScalar(300);
 
     this.roll();
 
@@ -25,16 +25,19 @@ e.Player = new Class({
       rotY: appa.rotation.y,
       rotZ: appa.rotation.z,
     }
-
+    var dir = Math.random() > 0.5 ? 1 : -1
     var finalPos = {
+      x: appa.position.x + (120 * dir),
       rotX: appa.rotation.x,
       rotY: appa.rotation.y + Math.PI * 2,
       rotZ: appa.rotation.z,
     }
     var rollTween = new TWEEN.Tween(curPos).
-    to(finalPos, 2000).
+    to(finalPos, this.turnTime).
     easing(TWEEN.Easing.Cubic.InOut).
+    delay(THREE.Math.randInt(1000, 3000)).
     onUpdate(function() {
+      appa.position.x = curPos.x;
       appa.rotation.set(curPos.rotX, curPos.rotY, curPos.rotZ);
     }).start();
     rollTween.onComplete(function() {
@@ -57,17 +60,18 @@ e.Player = new Class({
     }
 
 
-
+    var dir = Math.random() > 0.5 ? 1 : -1
     var finalSomersaultPosition = {
       x: appa.position.x,
-      y: appa.position.y + 50,
-      z: appa.position.z - 50,
+      y: appa.position.y + (dir * 150),
+      z: appa.position.z  + (100 * dir),
       rotX: appa.rotation.x += 2 * Math.PI,
       rotY: appa.rotation.y,
       rotZ: appa.rotation.z,
     }
     var somersaultTween = new TWEEN.Tween(curPos).
-    to(finalSomersaultPosition, 2000).
+    to(finalSomersaultPosition, this.turnTime).
+    delay(THREE.Math.randInt(1000, 3000)).
     easing(TWEEN.Easing.Cubic.InOut).
     yoyo(true).
     repeat(1).

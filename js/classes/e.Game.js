@@ -5,6 +5,12 @@ e.Game = new Class({
     // Bind render function permenantly
     this.render = this.render.bind(this);
 
+    this.scene1Duration = 43000;
+    // this.scene1Duration = 3000;
+    this.scene1 = true;
+    this.startingTime = Date.now();
+    this.flyTime = this.startingTime + this.scene1Duration;
+
     this.renderer = new THREE.WebGLRenderer({
       antialias: true
     });
@@ -12,16 +18,22 @@ e.Game = new Class({
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000000);
-    this.camera.position.set(0, 200, 400);
+    this.camera.position.set(0, 264, 2127);
+
+    //PHOTO
+    var photoTexture = THREE.ImageUtils.loadTexture('assets/photo.jpg');
+    var mat = new THREE.MeshBasicMaterial({map: photoTexture});
+    var geo = new THREE.PlaneGeometry(120000, 93000);
+    var photo = new THREE.Mesh(geo, mat);
+    photo.position.y = 31000;
+    photo.position.z = -160000;
+    this.scene.add(photo);
 
 
     var ambientLight = new THREE.AmbientLight(0x555555);
     this.scene.add(ambientLight);
 
-    //FOG
-    this.scene.fog = new THREE.Fog(0xffffff, 3000, 10000);
-    this.scene.fog.color.setHex(0xb6a7c8);
-    this.renderer.setClearColor(this.scene.fog.color, 1);
+    this.renderer.setClearColor(0xb6a7c8, 1);
 
     var spotLight = new THREE.SpotLight(0xffffff, 1, 0, Math.PI / 2, 1);
     spotLight.position.set(0, 1800, 1500);
@@ -58,7 +70,17 @@ e.Game = new Class({
   },
 
   render: function() {
-    this.controls.update();
+    if(this.scene1){
+      this.controls.update();
+      var currentTime = Date.now();
+      if(currentTime > this.flyTime){
+        this.scene1 = false;
+        this.controls.enabled = false;
+        this.scene2 = true;
+        this.flyToEnd();
+      }
+    }
+
     this.world.update();
     this.player.update();
     TWEEN.update();
@@ -70,6 +92,33 @@ e.Game = new Class({
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
+  },
+
+  flyToEnd: function(){
+    var self = this;
+    var curPos = {
+      x: this.camera.position.x,
+      y: this.camera.position.y,
+      z: this.camera.position.z,
+      rotY: this.camera.rotation.y
+    }
+    var finalPos = {
+      x: this.camera.position.x,
+      y: this.camera.position.y + 30000,
+      z: this.camera.position.z,
+      rotY: 0
+    }
+    var camTween = new TWEEN.Tween(curPos).
+      to(finalPos, 30000).
+      easing(TWEEN.Easing.Quartic.In).
+      onUpdate(function(){
+        self.camera.position.set(curPos.x, curPos.y,  curPos.z);
+        self.camera.rotation.y = curPos.rotY;
+      }).start();
+      camTween.onComplete(function(){
+        console.log('complete');
+      })
+
   }
 
 
