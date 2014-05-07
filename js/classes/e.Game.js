@@ -12,7 +12,7 @@ e.Game = new Class({
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100000);
-    this.camera.position.set(0, 200, 400);
+    this.camera.position.set(0, 130, 400);
 
 
     var ambientLight = new THREE.AmbientLight(0x555555);
@@ -20,7 +20,7 @@ e.Game = new Class({
 
     //FOG
     this.scene.fog = new THREE.Fog(0xffffff, 3000, 10000);
-    this.scene.fog.color.setHSL(0.5, 0.4, 0.4);
+    this.scene.fog.color.setHex(0xb6a7c8);
     this.renderer.setClearColor(this.scene.fog.color, 1);
 
     var spotLight = new THREE.SpotLight(0xffffff, 1, 0, Math.PI / 2, 1);
