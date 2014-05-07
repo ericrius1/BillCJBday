@@ -2,6 +2,7 @@ e.Game = new Class({
   extend: e.EventEmitter,
 
   construct: function() {
+    var self = this;
     // Bind render function permenantly
     this.render = this.render.bind(this);
 
@@ -61,6 +62,10 @@ e.Game = new Class({
       camera: this.camera,
       player: this.player
     });
+
+    setTimeout(function(){
+      self.world.changeSky();
+    }, 30000)
 
     this.start();
   },

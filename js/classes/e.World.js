@@ -55,6 +55,30 @@ e.World = new Class({
   update: function() {
     this.water.material.uniforms.time.value += 1.0 / 60.0;
     this.water.render();
+  },
+
+  changeSky: function(){
+    var self = this;
+    var color = this.game.renderer.getClearColor().clone();
+    var curColor = {
+      r: color.r,
+      g: color.g,
+      b: color.b,
+    };
+    var finalCol = {
+      r: 0.51,
+      g: 0.133,
+      b: 0.043
+    };
+    var skyTween = new TWEEN.Tween(curColor).
+      to(finalCol, 11000).
+      easing(TWEEN.Easing.Cubic.InOut).
+      repeat(1).
+      yoyo(true).
+      onUpdate(function(){
+        color.setRGB(curColor.r, curColor.g, curColor.b);
+        self.game.renderer.setClearColor(color);
+      }).start()
   }
 
 });
