@@ -5,9 +5,9 @@ e.Player = new Class({
     this.game = options.game;
     this.game.scene.add(appa);
     appa.rotation.x = -Math.PI / 2;
-    appa.position.y = this.camera.position.y / 2
+    appa.position.y = 300
     this.camera.lookAt(appa.position);
-    appa.scale.multiplyScalar(50);
+    appa.scale.multiplyScalar(100);
 
     this.roll();
 
@@ -35,7 +35,6 @@ e.Player = new Class({
     to(finalPos, 2000).
     easing(TWEEN.Easing.Cubic.InOut).
     onUpdate(function() {
-      console.log('yay');
       appa.rotation.set(curPos.rotX, curPos.rotY, curPos.rotZ);
     }).start();
     rollTween.onComplete(function() {

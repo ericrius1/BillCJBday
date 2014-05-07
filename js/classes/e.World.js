@@ -5,8 +5,8 @@ e.World = new Class({
 
 
     var parameters = {
-      width: 1000,
-      height: 1000,
+      width: 10,
+      height: 10,
       widthSegments: 250,
       heightSegments: 250,
       depth: 1500,
@@ -35,7 +35,7 @@ e.World = new Class({
 
 
     var mirrorMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(parameters.width * 500, parameters.height * 500, 50, 50),
+      new THREE.PlaneGeometry(parameters.width * 500, parameters.height * 500, 100, 100),
       this.water.material
     );
 
@@ -43,8 +43,11 @@ e.World = new Class({
     mirrorMesh.add(this.water);
     mirrorMesh.rotation.x = -Math.PI * 0.5;
     this.game.scene.add(mirrorMesh);
-    _.each(_.sample(mirrorMesh.geometry.vertices, 1000), function(vertex){
-      vertex.z = 200;
+    var origin = new THREE.Vector3(0,0,0);
+    _.each(mirrorMesh.geometry.vertices, function(vertex){
+      if(origin.distanceTo(vertex) > 2000){
+        vertex.z = 2000;
+      }
     });
 
   },

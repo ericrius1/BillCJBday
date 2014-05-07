@@ -5,6 +5,7 @@ e.Controls = new Class({
     this.keyboard = new e.Keyboard();
     this.controls = new THREE.OrbitControls(this.camera);
     this.controls.autoRotate = true;
+    this.controls.target = new THREE.Vector3(0, 300, 0);
 
   },
   update: function(){

@@ -12,7 +12,7 @@ e.Game = new Class({
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000000);
-    this.camera.position.set(0, 130, 400);
+    this.camera.position.set(0, 200, 400);
 
 
     var ambientLight = new THREE.AmbientLight(0x555555);
